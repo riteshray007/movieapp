@@ -3,6 +3,14 @@ import React, { Component } from "react";
 import Moviedata, { movies } from "./Moviesdata";
 
 export class Movielist extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      hover: "",
+    };
+  }
+
   render() {
     return (
       <>
@@ -12,7 +20,10 @@ export class Movielist extends Component {
         <div className="movielists">
           {movies.results.map((n) => {
             return (
-              <div className="card movie-card ">
+              <div className="card movie-card"
+                onMouseEnter={()=> this.setState({hover: n.id })}
+                onMouseLeave={()=> this.setState({ hover:'' })}
+              >
                 <img
                   src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
                   className="card-img-top movies-img"
@@ -21,38 +32,42 @@ export class Movielist extends Component {
                 <h5 className="card-title text-center movies-title">
                   {n.original_title}
                 </h5>
-                <a className="btn btn-primary favorite ">Favourite</a>
+                {this.state.hover == n.id && 
+                  <a className="btn btn-primary favorite ">Favourite</a>
+                }
               </div>
             );
           })}
-          <div className="pagination">
-            <nav aria-label="...">
-              <ul class="pagination">
-                <li class="page-item disabled">
-                  <a class="page-link">Previous</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    1
-                  </a>
-                </li>
-                <li class="page-item active" aria-current="page">
-                  <a class="page-link" href="#">
-                    2
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    3
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="#">
-                    Next
-                  </a>
-                </li>
-              </ul>
-            </nav>
+          <div>
+            <div className="pagination">
+              <nav aria-label="...">
+                <ul class="pagination">
+                  <li class="page-item disabled">
+                    <a class="page-link">Previous</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      1
+                    </a>
+                  </li>
+                  <li class="page-item active" aria-current="page">
+                    <a class="page-link" href="#">
+                      2
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      3
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="#">
+                      Next
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
           </div>
         </div>
       </>
