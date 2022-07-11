@@ -1,38 +1,78 @@
-.App {
-  text-align: center;
+.card-title {
+  font-family: "Edu NSW ACT Foundation", cursive;
+  font-size: 3vw;
+  color: beige;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.card-text {
+  font-family: "Edu QLD Beginner", cursive;
+  font-size: 1.5vw;
+  color: beige;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.card-img-top banner-img {
+  height: 100%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.banner-img {
+  width: 100%;
+  height: 70%;
+}
+
+.title {
+  position: absolute;
+  top: 28vw;
+  left: 4vw;
+}
+
+.subtitle {
+  position: absolute;
+  top: 32.5vw;
+  margin-left: 2vw;
+}
+
+.card {
+  position: relative;
+}
+
+.movielists {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  height: 0rem;
 }
 
-.App-link {
-  color: #61dafb;
+.movie-card {
+  margin: 2vw;
+  margin-top: 0vw;
+  width: 20vw;
+  border-color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.movies-title {
+  font-size: 2vw;
+  color: black;
+
+
+}
+
+.movies-img {
+  height: 25vw;
+  width: 20vw;
+  position: relative;
+}
+
+.favorite{
+    position: absolute;
+    width: 7.5vw;
+    height: 1.5vw;
+    font-size: 1.1vw;
+    top: 22vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    left: 6vw;
+    border-color: rgba(94, 250, 255, 0.638);
+    border-width: 0.1vw;
+    box-shadow: 2rem black ;
 }
