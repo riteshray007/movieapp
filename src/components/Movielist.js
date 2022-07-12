@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 
-
 import axios from "axios";
 
 export class Movielist extends Component {
@@ -9,20 +8,46 @@ export class Movielist extends Component {
 
     this.state = {
       hover: "",
-      Movies:[],
+      Movies: [],
+      currpage:70,
     };
   }
 
-
-  async componentDidMount(){
-    const res = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=1')
-
-    let datafromapi = res.data
+  handlepagenext = () => {
     this.setState({
-      Movies : [...datafromapi.results]
-    })
-
+      currpage: this.state.currpage + 1
+    } ,this.changemovies);
+  };
+  handelpageprevious = ()=>{
+    this.setState({
+      currpage : this.state.currpage -1 
+    } , this.changemovies)
   }
+
+  async componentDidMount() {
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=${this.state.currpage} `
+    );
+
+    let datafromapi = res.data;
+    this.setState({
+      Movies: [...datafromapi.results],
+    });
+  }
+
+    changemovies = async()=>{
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/movie/popular?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=${this.state.currpage} `
+    );
+
+    let datafromapi = res.data;
+    this.setState({
+      Movies: [...datafromapi.results],
+    });
+  }
+
+
+
   render() {
     return (
       <>
@@ -60,28 +85,14 @@ export class Movielist extends Component {
             <div className="pagina">
               <nav aria-label="...">
                 <ul class="pagination">
-                  <li class="page-item disabled">
-                    <a class="page-link">Previous</a>
+                  <li class="page-item ">
+                    <button onClick={this.handelpageprevious}  class="page-link">Previous</button>
                   </li>
+                  
                   <li class="page-item">
-                    <a class="page-link" href="#">
-                      1
-                    </a>
-                  </li>
-                  <li class="page-item active" aria-current="page">
-                    <a class="page-link" href="#">
-                      2
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
-                      3
-                    </a>
-                  </li>
-                  <li class="page-item">
-                    <a class="page-link" href="#">
+                    <button onClick={this.handlepagenext} class="page-link">
                       Next
-                    </a>
+                    </button>
                   </li>
                 </ul>
               </nav>
