@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 
-import Moviedata, { movies } from "./Moviesdata";
+
+import axios from "axios";
 
 export class Movielist extends Component {
   constructor() {
@@ -8,9 +9,20 @@ export class Movielist extends Component {
 
     this.state = {
       hover: "",
+      Movies:[],
     };
   }
 
+
+  async componentDidMount(){
+    const res = await axios.get('https://api.themoviedb.org/3/movie/popular?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=1')
+
+    let datafromapi = res.data
+    this.setState({
+      Movies : [...datafromapi.results]
+    })
+
+  }
   render() {
     return (
       <>
@@ -18,11 +30,12 @@ export class Movielist extends Component {
           <strong>Trending</strong>
         </h2>
         <div className="movielists">
-          {movies.results.map((n) => {
+          {this.state.Movies.map((n) => {
             return (
-              <div className="card movie-card"
-                onMouseEnter={()=> this.setState({hover: n.id })}
-                onMouseLeave={()=> this.setState({ hover:'' })}
+              <div
+                className="card movie-card"
+                onMouseEnter={() => this.setState({ hover: n.id })}
+                onMouseLeave={() => this.setState({ hover: "" })}
               >
                 <img
                   src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
@@ -32,14 +45,19 @@ export class Movielist extends Component {
                 <h5 className="card-title text-center movies-title">
                   {n.original_title}
                 </h5>
-                {this.state.hover == n.id && 
+                <h6 className="popularity text-center   ">
+                  {" "}
+                  popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "}
+                  {n.vote_average}/10{" "}
+                </h6>
+                {this.state.hover == n.id && (
                   <a className="btn btn-primary favorite ">Favourite</a>
-                }
+                )}
               </div>
             );
           })}
           <div>
-            <div className="pagination">
+            <div className="pagina">
               <nav aria-label="...">
                 <ul class="pagination">
                   <li class="page-item disabled">
