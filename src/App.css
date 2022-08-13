@@ -116,7 +116,7 @@
      color: #4c6769 ;
  }
 
- .genre-list:hover{
+ .genre-list-hover{
     /* opacity: 0.5; */
     background-color: #4c6769;
     color: #acbfc2;
