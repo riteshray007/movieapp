@@ -16,19 +16,21 @@
 
 .banner-img {
     width: 100%;
-    height: 70%;
+    height: 100%;
 }
 
 .title {
     position: absolute;
-    top: 28vw;
+    top: 35vh;
     left: 4vw;
+    font-size:2vw;
 }
 
 .subtitle {
     position: absolute;
-    top: 32.5vw;
+    top: 40vh;
     margin-left: 2vw;
+    font-size: 1.2vw;
 }
 
 .card {
@@ -47,16 +49,20 @@
     margin-top: 0vw;
     width: 20vw;
     border-color: white;
+    background-color: #4c6769;
 }
 
 .movies-title {
-    font-size: 1.3vw;
-    color: black;
+    padding: 0rem;
+    margin: 0px;
+    word-spacing: 2px;
+    font-size: 1.5vw;
+    color: #acbfc2;
 }
 
 .movies-img {
     height: 25vw;
-    width: 20vw;
+    width: 100%;
     position: relative;
 }
 
@@ -67,14 +73,15 @@
 
 .favorite {
     position: absolute;
-    width: 7.5vw;
-    height: 1.5vw;
-    font-size: 1.1vw;
-    top: 22vw;
+    width: 80%;
+    height: 2.5vw;
+    font-size: 1.2vw;
+    top: 21vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    left: 6vw;
+    left: 2vw;
+    background-color:#4c6769 ;
     border-color: rgba(94, 250, 255, 0.638);
     border-width: 0.1vw;
 
@@ -82,4 +89,35 @@
 .popularity{
     font-family: "Edu NSW ACT Foundation", cursive;
     font-size: 1.3vw;
+    margin: 0px;
+    margin-bottom  : 1px;
+    color: #acbfc2;
 }
+ /* *{
+    background-color: ;
+ } */
+
+ .genre-selector{
+    margin-left: 3vw;
+    padding: 0rem;
+    margin-top: 10vh;
+    width: 18vw;
+ }
+ .numberinput{
+    width: 10vw;
+    /* white-space: nowrap; */
+ }
+ /* .table{
+
+ } */
+
+ .genre-list{
+     background-color: #acbfc2;
+     color: #4c6769 ;
+ }
+
+ .genre-list:hover{
+    /* opacity: 0.5; */
+    background-color: #4c6769;
+    color: #acbfc2;
+ }

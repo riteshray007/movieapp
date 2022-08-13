@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 
 export class Navbar extends Component {
   render() {
@@ -13,8 +14,8 @@ export class Navbar extends Component {
             marginTop: "0vh",
           }}
         >
-          <h2 style={{ marginLeft: "5vw" }}>Movies</h2>
-          <h2 style={{ marginLeft: "5vw" }}>favorites</h2>
+          <Link to="/" ><h2 style={{ marginLeft: "5vw" }}>Movies</h2></Link>
+          < Link to="/favorites" ><h2 style={{ marginLeft: "5vw" }}>favorites</h2></Link>
         </div>
       </>
     );
@@ -22,3 +23,4 @@ export class Navbar extends Component {
 }
 
 export default Navbar;
+
