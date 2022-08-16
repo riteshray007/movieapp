@@ -121,3 +121,9 @@
     background-color: #4c6769;
     color: #acbfc2;
  }
+
+ .copyright{
+   display: flex;
+   flex-wrap: nowrap;
+    justify-content:flex-end ;    /* margin-top: 5vw; */
+ }

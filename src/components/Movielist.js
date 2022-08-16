@@ -13,6 +13,7 @@ export class Movielist extends Component {
       currpage: 1,
       pagearr: [1],
       favorites: [],
+      arraylength : 0,
     };
   }
 
@@ -28,6 +29,12 @@ export class Movielist extends Component {
 
         pagearr: [...this.state.pagearr, this.state.pagearr.length + 1]
       })
+      if(this.state.pagearr.length > 4)
+      {
+        this.setState({
+          arraylength : this.state.arraylength +1 ,
+        })
+      }
     }
   };
   handelpageprevious = () => {
@@ -37,6 +44,7 @@ export class Movielist extends Component {
           currpage: this.state.currpage - 1,
         }, this.handleprepage()
       )
+
     }
   };
 
@@ -46,6 +54,11 @@ export class Movielist extends Component {
       newarr = this.state.pagearr.filter((d) => {
         return d < (this.state.pagearr.length)
       })
+      if(this.state.arraylength>0){
+        this.setState({
+          arraylength : this.state.arraylength-1,
+        })
+      }
     }
     this.setState({
       pagearr: [...newarr]
@@ -91,7 +104,7 @@ export class Movielist extends Component {
     })
     let datafromapi = res.data;
     this.setState({
-      Movies: [...datafromapi.results], 
+      Movies: [...datafromapi.results],
       favorites: [...temp],
     });
   }
@@ -116,6 +129,8 @@ export class Movielist extends Component {
 
   render() {
     // let data = JSON.parse(localStorage.getItem('movie-list') || '[]' )
+
+
     return (
       <>
         {/* <Banner> number = {this.state.Movies} </Banner> */}
@@ -165,7 +180,7 @@ export class Movielist extends Component {
                       Previous
                     </button>
                   </li>
-                  {this.state.pagearr.map((m) =>
+                  {this.state.pagearr.slice(this.state.arraylength , this.state.pagearr.length).map((m) =>
                   (<li>
                     <button onClick={() => this.pageno(m)} className="page-link"> {m} </button>
 
@@ -186,8 +201,8 @@ export class Movielist extends Component {
               </nav>
             </div>
           </div>
+          {/* <div className='copyright'> <h2> COPYRIGHT &#169; 2022 @Ritesh-Ray 	&#174; </h2> </div> */}
         </div>
-
       </>
     );
   }
