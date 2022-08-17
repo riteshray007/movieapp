@@ -11,6 +11,7 @@ export class Favorites extends Component {
             genres : [],
             currgenre : 'All Movies',
             currentsearch : '',
+            maxrow : 5,
         }
     }
     Handlecurrentgenre = (genre)=>{
@@ -176,7 +177,7 @@ export class Favorites extends Component {
                         <div className='row ' >
                             <input type='text' placeholder='Search'className='input-group-text col '
                              onChange={(e)=>this.setState({ currentsearch : e.target.value  })}  />
-                            <input type='number' className='input-group-text  col numberinput' />
+                            <input type='number' className='input-group-text  col numberinput' value={this.state.maxrow}  />
                         </div>
                         <div className='row' >
                             <table class="table"   >
