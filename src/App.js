@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar";
 import Banner from "./components/Banner";
 import Movielist from "./components/Movielist";
 import Favorites from "./components/favorites";
+import TopRated from './components/TopRated';
+import Upcoming from './components/Upcoming';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -13,9 +15,11 @@ function App() {
 
       <Navbar />
       <Routes>
-        <Route path="/" element={<> <Banner /> <Movielist /> </>} />
+        <Route path="/" element={<> <Banner/> <Movielist /> </>} />
+        <Route path='/TopRated' element={<> <Banner/> <TopRated/> </> } />
+        <Route path='/Upcoming' element={ <> <Banner /> <Upcoming/> </> }  />
 
-        <Route path="/favorites" element= {<Favorites />} />
+        <Route path="/favorites" element= { <Favorites/> } />
 
         </Routes>
         
