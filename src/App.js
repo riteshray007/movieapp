@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<> <Banner/> <Movielist /> </>} />
         <Route path='/TopRated' element={<> <Banner/> <TopRated/> </> } />
-        <Route path='/Upcoming' element={ <> <Banner /> <Upcoming/> </> }  />
+        <Route path='/mostrecent' element={ <> <Banner /> <Upcoming/> </> }  />
 
         <Route path="/favorites" element= { <Favorites/> } />
 

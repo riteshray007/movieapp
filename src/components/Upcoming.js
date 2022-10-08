@@ -134,7 +134,7 @@ export class Upcoming extends Component {
             <>
                 {/* <Banner> number = {this.state.Movies} </Banner> */}
                 <h2 className="trending text-center">
-                    <strong>Upcoming</strong>
+                    <strong>Most Recent</strong>
                 </h2>
                 <div className="movielists">
                     {this.state.Movies.map((n) => {
@@ -160,7 +160,6 @@ export class Upcoming extends Component {
                                     <>
                                         <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
                                             {this.state.favorites.includes(n.id) ? "Remove from Favorites" : 'Add to favorites'} </a>
-
                                     </>
                                 )}
 

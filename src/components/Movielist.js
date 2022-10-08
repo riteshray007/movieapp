@@ -1,7 +1,15 @@
 import React, { Component } from "react";
 
 import axios from "axios";
-import Banner from "./Banner";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import Trailer from "./Trailer";
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import ReactPlayer from 'react-player'
+
 
 export class Movielist extends Component {
   constructor() {
@@ -9,11 +17,15 @@ export class Movielist extends Component {
 
     this.state = {
       Hover: "",
+      open: "",
       Movies: [],
       currpage: 1,
       pagearr: [1],
       favorites: [],
-      arraylength : 0,
+      arraylength: 0,      
+      link : "",
+      trailerno : 0 ,
+      // openid : 
     };
   }
 
@@ -29,10 +41,9 @@ export class Movielist extends Component {
 
         pagearr: [...this.state.pagearr, this.state.pagearr.length + 1]
       })
-      if(this.state.pagearr.length > 4)
-      {
+      if (this.state.pagearr.length > 4) {
         this.setState({
-          arraylength : this.state.arraylength +1 ,
+          arraylength: this.state.arraylength + 1,
         })
       }
     }
@@ -44,7 +55,6 @@ export class Movielist extends Component {
           currpage: this.state.currpage - 1,
         }, this.handleprepage()
       )
-
     }
   };
 
@@ -54,9 +64,9 @@ export class Movielist extends Component {
       newarr = this.state.pagearr.filter((d) => {
         return d < (this.state.pagearr.length)
       })
-      if(this.state.arraylength>0){
+      if (this.state.arraylength > 0) {
         this.setState({
-          arraylength : this.state.arraylength-1,
+          arraylength: this.state.arraylength - 1,
         })
       }
     }
@@ -76,21 +86,17 @@ export class Movielist extends Component {
     else {
       data.push(obj)
     }
-
     localStorage.setItem('movie-list', JSON.stringify(data))
     this.handlefavarray();
-
   }
+
   handlefavarray = () => {
     let data = JSON.parse(localStorage.getItem('movie-list') || '[]')
 
     let temp = data.map((i) => {
       return i.id
     })
-
     this.setState({ favorites: [...temp], })
-
-
   }
 
   async componentDidMount() {
@@ -109,31 +115,74 @@ export class Movielist extends Component {
     });
   }
 
+
+  setopen  (id) {
+    // console.log(id);
+    this.setState({
+      open: id,
+      trailerno : 0,
+    });
+    console.log( "open id - " +  this.state.open);
+    this.trailer(id);
+  }
+
+  async trailer(id) {
+    const trailres = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`
+    );
+    let traildata = trailres.data.results;
+    // console.log(traildata);
+    let trailfilt = traildata.filter((film)=>{
+      return film.official != false
+    })
+    
+    // this.setState({
+    //   keylist : trailfilt[0].key,
+    // })
+    // console.log(" = " + this.state.keylist);
+    console.log  ( "trailerno - " + this.state.trailerno);
+    this.setState({
+      link :  `https://www.youtube.com/watch?v=${trailfilt[`${this.state.trailerno}`].key}` ,
+    })
+    // console.log(this.state.link);
+  }
+
+  setclose = () => {
+    this.setState({
+      open: "",
+    })
+  }
+
   async componentDidUpdate() {
     const res = await axios.get(
       `https://api.themoviedb.org/3/movie/popular?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=${this.state.currpage} `
     );
-
     let datafromapi = res.data;
     this.setState({
       Movies: [...datafromapi.results],
     });
   };
   pageno(num) {
-
     this.setState({
       currpage: num,
     })
+  }
+  trailerincrement(){
+    let x = this.state.trailerno ;
+    x++;
+    this.setState({
+      trailerno : x,
+    })
+    this.trailer(this.state.open)
   }
 
 
   render() {
     // let data = JSON.parse(localStorage.getItem('movie-list') || '[]' )
 
-
     return (
       <>
-        {/* <Banner> number = {this.state.Movies} </Banner> */}
+     {/* <h1>{this.state.open}</h1> */}
         <h2 className="trending text-center">
           <strong>Trending</strong>
         </h2>
@@ -153,17 +202,34 @@ export class Movielist extends Component {
                   {n.original_title}
                 </h4>
                 <h6 className="popularity text-center">
-
-                  popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "}
-                  {n.vote_average}/10{" "}
+                  popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "} {n.vote_average}/10 {" "}
                 </h6>
                 {this.state.hover == n.id && (
                   <>
                     <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
                       {this.state.favorites.includes(n.id) ? "Remove from Favorites" : 'Add to favorites'} </a>
-
+                    <FontAwesomeIcon className="btn btn-primary play " icon={faYoutube} onClick={() => this.setopen(n.id)}></FontAwesomeIcon>
                   </>
                 )}
+                {/* <FontAwesomeIcon icon="fa-solid fa-clapperboard-play" /> */}
+                <Dialog
+                  open={this.state.open == n.id}
+                  onClose={this.setclose}
+                  aria-labelledby='alert-dialog-title'
+                  aria-describedby='alert-dialog-description'
+                  fullWidth={true}
+                  maxWidth='md'>
+                  <DialogActions>
+                    {/* let sr =  https://www.youtube.com/watch?v=&{this.state.keylist} ; */}
+                  < ReactPlayer url={this.state.link} controls />
+                  {/* <video src={this.state.link} controls  ></video> */}
+                    <Button onClick={this.setclose} autoFocus>
+                      Close
+                    </Button>
+                    <Button onClick={()=> this.trailerincrement() } >  Next </Button>
+                    <p> {n.id} </p>
+                  </DialogActions>
+                </Dialog>
 
               </div>
             );
@@ -171,22 +237,21 @@ export class Movielist extends Component {
           <div>
             <div className="pagina">
               <nav aria-label="...">
-                <ul className="pagination">
-                  <li className="page-item ">
+                <ul className="pagination" >
+                  <li className="page-item" >
                     <button
                       onClick={this.handelpageprevious}
-                      className="page-link"
-                    >
+                      className="page-link" >
                       Previous
                     </button>
                   </li>
-                  {this.state.pagearr.slice(this.state.arraylength , this.state.pagearr.length).map((m) =>
+                  {this.state.pagearr.slice(this.state.arraylength, this.state.pagearr.length).map((m) =>
                   (<li>
                     <button onClick={() => this.pageno(m)} className="page-link"> {m} </button>
 
+
                   </li>)
                   )}
-
 
                   <li className="page-item">
                     <button

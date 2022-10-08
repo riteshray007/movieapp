@@ -73,14 +73,27 @@
 
 .favorite {
     position: absolute;
-    width: 80%;
+    width: 60%;
     height: 2.5vw;
-    font-size: 1.2vw;
-    top: 21vw;
+    font-size: 1vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    top: 21vw;
     left: 2vw;
+    background-color:#4c6769 ;
+    border-color: rgba(94, 250, 255, 0.638);
+    border-width: 0.1vw;
+    padding: 0rem;
+
+}
+.play{
+    position: absolute;
+    top: 21vw;
+    left: 15vw;
+    width: 12%;
+    height:2.5vw;
+    padding: 0rem;
     background-color:#4c6769 ;
     border-color: rgba(94, 250, 255, 0.638);
     border-width: 0.1vw;

@@ -18,7 +18,6 @@ export class Favorites extends Component {
         this.setState({
             currgenre : genre,
         })
-
     }
 
     componentDidMount(){
@@ -72,7 +71,7 @@ export class Favorites extends Component {
                 moviedata : [...tempa]
             })
 
-            localStorage.setItem( 'movie-list' , JSON.stringify(tempa) )
+            localStorage.setItem( 'movie-list' , JSON.stringify(tempa))
     }
     handlepopularityinc = ()=>{
         let temp = this.state.moviedata.sort(function(a,b){
@@ -124,7 +123,7 @@ export class Favorites extends Component {
             10751: "Family",
             14: "Fantasy",
             36: "History",
-            27: "Horror",
+            27: "Horror",  
             10402: "Music",
             9648: "Mystery",
             10749: "Romance",
