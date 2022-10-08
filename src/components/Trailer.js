@@ -1,54 +1,48 @@
-import React , {useEffect} from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+// import React, { useEffect } from 'react';
+// import Button from '@mui/material/Button';
+// import Dialog from '@mui/material/Dialog';
+// import DialogActions from '@mui/material/DialogActions';
 
-export default function Trailer({openup}) {
-  const [open, setOpen] = React.useState(false);
 
-  
-  //  useEffect (()=>{
-  //   if(openup === true){
-  //     setOpen(false);
-  //   }else{
-  //     setOpen(true);
-  //   }
-  //  },[])
-  const handleopen = () =>{
-    setOpen(true);
-  }
-  const handleClose = () => {
-    setOpen(false);
-  };
+// export default function Trailer({ openup }) {
+//   const [open, setOpen] = React.useState(false);
 
-  return (
-    <div>
-      
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-      >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={this.handleClose}>Disagree</Button>
-          <Button onClick={this.handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
-  );
-}
+
+//   //  useEffect (()=>{
+//   //   if(openup === true){
+//   //     setOpen(false);
+//   //   }else{
+//   //     setOpen(true);
+//   //   }
+//   //  },[])
+//   const handleopen = () => {
+//     setOpen(true);
+//   }
+//   const handleClose = () => {
+//     setOpen(false);
+//   };
+
+//   return (
+//     <div>
+
+//       <Dialog
+//         open={this.state.open == n.id}
+//         onClose={this.setclose}
+//         aria-labelledby='alert-dialog-title'
+//         aria-describedby='alert-dialog-description'
+//         fullWidth={true}
+//         maxWidth='md'>
+//         <DialogActions>
+//           {/* let sr =  https://www.youtube.com/watch?v=&{this.state.keylist} ; */}
+//           < ReactPlayer url={this.state.link} controls />
+//           {/* <video src={this.state.link} controls  ></video> */}
+//           <Button onClick={this.setclose} autoFocus>
+//             Close
+//           </Button>
+//           <Button onClick={() => this.trailerincrement()} >  Next </Button>
+//           {/* <p> {n.id} </p> */}
+//         </DialogActions>
+//       </Dialog>
+//     </div>
+//   );
+// }

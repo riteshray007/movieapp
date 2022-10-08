@@ -22,9 +22,10 @@ export class Movielist extends Component {
       currpage: 1,
       pagearr: [1],
       favorites: [],
-      arraylength: 0,      
-      link : "",
-      trailerno : 0 ,
+      arraylength: 0,
+      link: "",
+      trailerno: 0,
+      maxtraileno: 0,
       // openid : 
     };
   }
@@ -116,35 +117,51 @@ export class Movielist extends Component {
   }
 
 
-  setopen  (id) {
+  setopen(id) {
     // console.log(id);
     this.setState({
       open: id,
-      trailerno : 0,
+      trailerno: 0,
     });
-    console.log( "open id - " +  this.state.open);
+    console.log(this.state.open);
     this.trailer(id);
   }
 
   async trailer(id) {
+    console.log("open id - " + this.state.open);
     const trailres = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`
     );
     let traildata = trailres.data.results;
+    if(traildata.length == 0){
+      this.setState({
+        link : '',
+      }) 
+      return ;
+    }
     // console.log(traildata);
-    let trailfilt = traildata.filter((film)=>{
+    let trailfilt = traildata.filter((film) => {
       return film.official != false
     })
-    
+
     // this.setState({
     //   keylist : trailfilt[0].key,
     // })
     // console.log(" = " + this.state.keylist);
-    console.log  ( "trailerno - " + this.state.trailerno);
-    this.setState({
-      link :  `https://www.youtube.com/watch?v=${trailfilt[`${this.state.trailerno}`].key}` ,
-    })
-    // console.log(this.state.link);
+    let max = trailfilt.length
+    if (max == 0) {
+      this.setState({
+        link: `https://www.youtube.com/watch?v=${traildata[`${this.state.trailerno}`].key}`,
+        maxtraileno: max,
+      })
+    }
+    else {
+      this.setState({
+        link: `https://www.youtube.com/watch?v=${trailfilt[`${this.state.trailerno}`].key}`,
+        maxtraileno: max,
+      })
+    }
+    console.log("trailerno - " + this.state.trailerno);
   }
 
   setclose = () => {
@@ -167,11 +184,17 @@ export class Movielist extends Component {
       currpage: num,
     })
   }
-  trailerincrement(){
-    let x = this.state.trailerno ;
-    x++;
+  trailerincrement() {
+    let x = this.state.trailerno;
+    let max = this.state.maxtraileno;
+    if (x < max - 1) {
+      x++;
+    }
+    else {
+      x = 0;
+    }
     this.setState({
-      trailerno : x,
+      trailerno: x,
     })
     this.trailer(this.state.open)
   }
@@ -182,7 +205,7 @@ export class Movielist extends Component {
 
     return (
       <>
-     {/* <h1>{this.state.open}</h1> */}
+        {/* <h1>{this.state.open}</h1> */}
         <h2 className="trending text-center">
           <strong>Trending</strong>
         </h2>
@@ -221,13 +244,13 @@ export class Movielist extends Component {
                   maxWidth='md'>
                   <DialogActions>
                     {/* let sr =  https://www.youtube.com/watch?v=&{this.state.keylist} ; */}
-                  < ReactPlayer url={this.state.link} controls />
-                  {/* <video src={this.state.link} controls  ></video> */}
+                    < ReactPlayer url={this.state.link} controls />
+                    {/* <video src={this.state.link} controls  ></video> */}
                     <Button onClick={this.setclose} autoFocus>
                       Close
                     </Button>
-                    <Button onClick={()=> this.trailerincrement() } >  Next </Button>
-                    <p> {n.id} </p>
+                    <Button onClick={() => this.trailerincrement()} >  Next </Button>
+                    {/* <p> {n.id} </p> */}
                   </DialogActions>
                 </Dialog>
 
