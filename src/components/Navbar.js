@@ -5,13 +5,14 @@ export class Navbar extends Component {
   render() {
     return (
       <>
-        <div
+        <div className="navbar"
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             fontStyle: "italic",
             marginTop: "0vh",
+            
           }}
         >
           <Link to="/" ><h2 style={{ marginLeft: "5vw" }}>Popular</h2></Link>

@@ -10,6 +10,12 @@
     color: beige;
 }
 
+.navbar {
+    background: #34ffad;
+    background: -webkit-linear-gradient(121deg, #34ffad 0%, #c5cdc1 100%);
+    background: linear-gradient(121deg, #34ffad 0%, #c5cdc1 70%);
+}
+
 .card-img-top banner-img {
     height: 100%;
 }
@@ -23,7 +29,7 @@
     position: absolute;
     top: 35vh;
     left: 4vw;
-    font-size:2vw;
+    font-size: 2vw;
 }
 
 .subtitle {
@@ -37,19 +43,41 @@
     position: relative;
 }
 
+.maincontent {
+    display: flex;
+    justify-content: center;
+}
+
 .movielists {
+    padding-bottom: 1vh;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    height: 0rem;
+    width: 85%;
+    justify-content: space-around;
+    height: 75vh;
+    /* background-color: aqua; */
+    overflow: scroll;
+
+}
+
+.movielists::-webkit-scrollbar {
+    display: none;
 }
 
 .movie-card {
-    margin: 2vw;
-    margin-top: 0vw;
+    margin-left: 1vw;
+    margin-top: 2vw;
     width: 20vw;
     border-color: white;
-    background-color: #4c6769;
+    background-color: #436163;
+}
+
+.pagechange {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 2vw;
+    /* align-items: center; */
 }
 
 .movies-title {
@@ -66,10 +94,7 @@
     position: relative;
 }
 
-.trending {
-    margin-top: 5vh;
-    margin-bottom: 5vh;
-}
+
 
 .favorite {
     position: absolute;
@@ -81,62 +106,294 @@
     justify-content: center;
     top: 21vw;
     left: 2vw;
-    background-color:#4c6769 ;
+    background-color: #4c6769;
     border-color: rgba(94, 250, 255, 0.638);
     border-width: 0.1vw;
     padding: 0rem;
 
 }
-.play{
+
+.play {
     position: absolute;
     top: 21vw;
     left: 15vw;
     width: 12%;
-    height:2.5vw;
+    height: 2.5vw;
     padding: 0rem;
-    background-color:#4c6769 ;
+    background-color: #4c6769;
     border-color: rgba(94, 250, 255, 0.638);
     border-width: 0.1vw;
 
 }
-.popularity{
+
+.popularity {
     font-family: "Edu NSW ACT Foundation", cursive;
     font-size: 1.3vw;
     margin: 0px;
-    margin-bottom  : 1px;
+    margin-bottom: 1px;
     color: #acbfc2;
 }
- /* *{
-    background-color: ;
- } */
 
- .genre-selector{
+/* *{
+    background-color: ;
+} */
+
+.genre-selector {
     margin-left: 3vw;
     padding: 0rem;
     margin-top: 10vh;
     width: 18vw;
- }
- .numberinput{
+}
+
+.numberinput {
     width: 10vw;
     /* white-space: nowrap; */
- }
- /* .table{
+}
 
- } */
+/* .table{
 
- .genre-list{
-     background-color: #acbfc2;
-     color: #4c6769 ;
- }
+} */
 
- .genre-list-hover{
+.genre-list {
+    background-color: #acbfc2;
+    color: #4c6769;
+}
+
+.genre-list-hover {
     /* opacity: 0.5; */
     background-color: #4c6769;
     color: #acbfc2;
- }
+}
 
- .copyright{
-   display: flex;
-   flex-wrap: nowrap;
-    justify-content:flex-end ;    /* margin-top: 5vw; */
- }
+.copyright {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+    /* margin-top: 5vw; */
+}
+
+
+
+
+
+
+.glitch-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+
+    justify-content: center;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+.glitch {
+    position: relative;
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #000000;
+    letter-spacing: 5px;
+    z-index: 1;
+}
+
+.glitch:before {
+    content: attr(data-glitch);
+    position: absolute;
+    top: 0;
+    left: -2px;
+    width: 100%;
+    color: #000000;
+    background-color: #ffffff;
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: noise-before 3s infinite linear alternate-reverse;
+}
+
+.glitch:after {
+    content: attr(data-glitch);
+    position: absolute;
+    top: 0;
+    left: 2px;
+    width: 100%;
+    color: #000000;
+    background-color: #ffffff;
+    overflow: hidden;
+    clip: rect(0, 900px, 0, 0);
+    animation: noise-after 2s infinite linear alternate-reverse;
+}
+
+@keyframes noise-before {
+    0% {
+        clip: rect(61px, 9999px, 52px, 0);
+    }
+
+    5% {
+        clip: rect(33px, 9999px, 144px, 0);
+    }
+
+    10% {
+        clip: rect(121px, 9999px, 115px, 0);
+    }
+
+    15% {
+        clip: rect(144px, 9999px, 162px, 0);
+    }
+
+    20% {
+        clip: rect(62px, 9999px, 180px, 0);
+    }
+
+    25% {
+        clip: rect(34px, 9999px, 42px, 0);
+    }
+
+    30% {
+        clip: rect(147px, 9999px, 179px, 0);
+    }
+
+    35% {
+        clip: rect(99px, 9999px, 63px, 0);
+    }
+
+    40% {
+        clip: rect(188px, 9999px, 122px, 0);
+    }
+
+    45% {
+        clip: rect(154px, 9999px, 14px, 0);
+    }
+
+    50% {
+        clip: rect(63px, 9999px, 37px, 0);
+    }
+
+    55% {
+        clip: rect(161px, 9999px, 147px, 0);
+    }
+
+    60% {
+        clip: rect(109px, 9999px, 175px, 0);
+    }
+
+    65% {
+        clip: rect(157px, 9999px, 88px, 0);
+    }
+
+    70% {
+        clip: rect(173px, 9999px, 131px, 0);
+    }
+
+    75% {
+        clip: rect(62px, 9999px, 70px, 0);
+    }
+
+    80% {
+        clip: rect(24px, 9999px, 153px, 0);
+    }
+
+    85% {
+        clip: rect(138px, 9999px, 40px, 0);
+    }
+
+    90% {
+        clip: rect(79px, 9999px, 136px, 0);
+    }
+
+    95% {
+        clip: rect(25px, 9999px, 34px, 0);
+    }
+
+    100% {
+        clip: rect(173px, 9999px, 166px, 0);
+    }
+}
+
+@keyframes noise-after {
+    0% {
+        clip: rect(26px, 9999px, 33px, 0);
+    }
+
+    5% {
+        clip: rect(140px, 9999px, 198px, 0);
+    }
+
+    10% {
+        clip: rect(184px, 9999px, 89px, 0);
+    }
+
+    15% {
+        clip: rect(121px, 9999px, 6px, 0);
+    }
+
+    20% {
+        clip: rect(181px, 9999px, 99px, 0);
+    }
+
+    25% {
+        clip: rect(154px, 9999px, 133px, 0);
+    }
+
+    30% {
+        clip: rect(134px, 9999px, 169px, 0);
+    }
+
+    35% {
+        clip: rect(26px, 9999px, 187px, 0);
+    }
+
+    40% {
+        clip: rect(147px, 9999px, 137px, 0);
+    }
+
+    45% {
+        clip: rect(31px, 9999px, 52px, 0);
+    }
+
+    50% {
+        clip: rect(191px, 9999px, 109px, 0);
+    }
+
+    55% {
+        clip: rect(74px, 9999px, 54px, 0);
+    }
+
+    60% {
+        clip: rect(145px, 9999px, 75px, 0);
+    }
+
+    65% {
+        clip: rect(153px, 9999px, 198px, 0);
+    }
+
+    70% {
+        clip: rect(99px, 9999px, 136px, 0);
+    }
+
+    75% {
+        clip: rect(118px, 9999px, 192px, 0);
+    }
+
+    80% {
+        clip: rect(1px, 9999px, 83px, 0);
+    }
+
+    85% {
+        clip: rect(145px, 9999px, 98px, 0);
+    }
+
+    90% {
+        clip: rect(121px, 9999px, 154px, 0);
+    }
+
+    95% {
+        clip: rect(156px, 9999px, 44px, 0);
+    }
+
+    100% {
+        clip: rect(67px, 9999px, 122px, 0);
+    }
+}

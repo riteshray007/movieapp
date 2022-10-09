@@ -5,6 +5,7 @@ import Movielist from "./components/Movielist";
 import Favorites from "./components/favorites";
 import TopRated from './components/TopRated';
 import Upcoming from './components/Upcoming';
+import Trailer from './components/Trailer';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 
@@ -20,7 +21,7 @@ function App() {
         <Route path='/mostrecent' element={ <> <Banner /> <Upcoming/> </> }  />
 
         <Route path="/favorites" element= { <Favorites/> } />
-
+        <Route path="/detail" element={ <Trailer/> } />
         </Routes>
         
     </BrowserRouter>
