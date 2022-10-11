@@ -1,6 +1,21 @@
-import React from 'react'
+import React,{useState , useEffect} from 'react'
+import axios from 'axios';
 
 function Trailer() {
+
+    const [ID , setid ] = useState("642885");
+
+
+    useEffect(()=> {
+        axios.get(`https://api.themoviedb.org/3/movie/${ID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response=>{
+            console.log(response.data)
+        }).catch(err=>{
+            console.log(err);
+        })
+    },[ID])
+
+
+
     return (
         <div>
 

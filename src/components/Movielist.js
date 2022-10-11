@@ -127,7 +127,7 @@ export class Movielist extends Component {
   }
 
   async trailer(id) {
-    console.log("open id - " + this.state.open);
+    console.log("open id - " + id );
     const trailres = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`
     );
@@ -261,7 +261,7 @@ export class Movielist extends Component {
                       {/* <video src={this.state.link} controls  ></video> */}
 
                       <div style={{ margin: '2rem' }} >
-                        <Button onClick={this.setclose} autoFocus> Close </Button>
+                        <Button onClick={(this.setclose)} autoFocus> Close </Button>
                         <Button onClick={() => this.trailerincrement()} >  Next </Button>
                       </div>
 
