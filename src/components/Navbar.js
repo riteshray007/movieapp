@@ -26,7 +26,7 @@ function Navbar() {
         </div>
         
 
-        <div style={{width:'50%'}} >
+        <div style={{width:'40%'}} >
         <div class="wrap">
           <div class="search">
             <input type="text" class="searchTerm" placeholder="Search any movie here..." />
