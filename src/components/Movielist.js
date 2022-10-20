@@ -8,6 +8,8 @@ import Dialog from '@mui/material/Dialog';
 import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import ReactPlayer from 'react-player'
+import { Navigate } from "react-router-dom";
+import Trailer from "./Trailer";
 
 
 export class Movielist extends Component {
@@ -25,7 +27,7 @@ export class Movielist extends Component {
       link: "",
       trailerno: 0,
       maxtraileno: 0,
-      // openid : 
+      detailid : '',
     };
   }
 
@@ -197,6 +199,10 @@ export class Movielist extends Component {
     })
     this.trailer(this.state.open)
   }
+  
+  
+
+  
 
 
   render() {
@@ -211,7 +217,6 @@ export class Movielist extends Component {
           <div class="glitch-wrapper trending  ">
             <div class="glitch" data-glitch="Trending">  Trending  </div>
           </div>
-        
 
 
 
@@ -224,7 +229,9 @@ export class Movielist extends Component {
                   className="card movie-card"
                   onMouseEnter={() => this.setState({ hover: n.id })}
                   onMouseLeave={() => this.setState({ hover: "" })}
-                  onclick={() => this.setState}
+                  onClick={ ()=>{
+                    this.setState({ detailid : n.id })
+                  } }
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
@@ -236,6 +243,12 @@ export class Movielist extends Component {
                   <h6 className="popularity text-center">
                     popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "} {n.vote_average}/10 {" "}
                   </h6>
+                  {this.state.detailid == n.id && (
+                    <div>
+                      <Trailer  detailID={n.id}  />
+                    <Navigate to="/detail" replace={true} /> 
+                    </div>
+                  )}
                   {this.state.hover == n.id && (
                     <>
                       <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
@@ -243,7 +256,7 @@ export class Movielist extends Component {
                       <FontAwesomeIcon className="btn btn-primary play " icon={faYoutube} onClick={() => this.setopen(n.id)}></FontAwesomeIcon>
                     </>
                   )}
-                  {/* <FontAwesomeIcon icon="fa-solid fa-clapperboard-play" /> */}
+                 
                   <Dialog
                     open={this.state.open == n.id}
                     onClose={this.setclose}
@@ -275,6 +288,7 @@ export class Movielist extends Component {
             {/* <div className='copyright'> <h2> COPYRIGHT &#169; 2022 @Ritesh-Ray 	&#174; </h2> </div> */}
           </div  >
         </div>
+
         <div className="pagechange" >
 
           <div className="pagina">
@@ -312,7 +326,13 @@ export class Movielist extends Component {
       </>
     );
   }
+
 }
+// export function Trailer(props) {
+//   // const navigate = useNavigate();
+//   return ( <Movielist navigate={navigate}></Movielist>   )
+  
+// }
 
 export default Movielist;
 

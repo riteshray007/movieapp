@@ -23,6 +23,7 @@ function Navbar() {
           < Link to="/TopRated" ><h2 >Top Rated</h2></Link>
           < Link to="/mostrecent" ><h2 >Most Recent</h2></Link>
           < Link to="/favorites" ><h2 >favorites</h2></Link>
+          {/* <Link to='/detail' ></Link> */}
         </div>
         
 

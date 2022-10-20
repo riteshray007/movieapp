@@ -1,11 +1,49 @@
+*{
+    padding: 0px;
+    margin: 0px;
+}
 .detailmain{
     background-color: rgb(56, 54, 54);
     color: white;
+    border: 5px solid rgb(56, 54, 54);
     text-shadow: 1px 1px 2px rgb(203, 114, 114), 0 0 25px rgb(250, 250, 251), 0 0 5px rgb(92, 92, 95);
 }
+
+.picandvid{
+  display: flex;
+  justify-content: center;
+  height: 55vh;
+  /* background-color: green; */
+  margin-top: 3vh;
+  margin-bottom: 3vh;
+}
+
 .poster{
     height: 100%;
-    width: 25%;
+    width: 20%;  
+    margin-right: 2vw;
+}
+
+.rightbtn{
+    position: absolute;
+    bottom: 50%;
+    left: 83.2%;
+    margin: 0rem;
+    padding: 0rem;
+    
+}
+
+.leftbtn{
+    position: absolute;
+    bottom: 50% ;
+    left: 0%;
+    margin: 0rem;
+    padding: 0rem;
+}
+
+.trailvideo{
+    position: relative;
+    /* margin-left: 2vw ; */
 }
 
 .trailervideo{

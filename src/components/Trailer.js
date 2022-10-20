@@ -3,10 +3,12 @@ import axios from 'axios';
 import trailer from "./trailer.css";
 import ReactPlayer from 'react-player';
 import { Button } from '@mui/material';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-function Trailer() {
+function Trailer({detailID}) {
 
-    const [ID, setid] = useState("642885");
+    // const [ID, setid] = useState({detailID});
     const [apidata, setapidata] = useState({});
     const [genres, setgenre] = useState({})
     const [videos, setvideos] = useState([])
@@ -15,9 +17,10 @@ function Trailer() {
 
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/${ID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+        axios.get(`https://api.themoviedb.org/3/movie/${{detailID}}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
             // console.log(response.data)
+            console.log( "props id -  "  +  detailID)
             setapidata(response.data)
             setgenre(response.data.genres);
         }).catch(err => {
@@ -26,7 +29,7 @@ function Trailer() {
     }, [])
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/${ID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+        axios.get(`https://api.themoviedb.org/3/movie/${detailID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             //get videos api     
             let traildata = res.data.results
             console.log(traildata);
@@ -54,13 +57,13 @@ function Trailer() {
                 })
                 setlink(`https://www.youtube.com/watch?v=${keys[0]}`)
                 setvideos([...keys]);
-                console.log("keys with - " + keys)
+                // console.log("keys with - " + keys)
                 //result i get - 
                 // FfpBUelcFdo,6U8ikxgyn58,4dDljHr0DHw,sxp5yWfsutE,
                 // J2_BA4UKENg,yzuecv_PSHg,gLyamuqjXZ8,idc0EOmKr30,_6oXTLMS__E,ecJRvz9nk-U
                 // setvideos([...keys]);
                 //setting the videos state
-                console.log("keys with v - " + videos)
+                // console.log("keys with v - " + videos)
                 //result i get - 
                 // [object Object],[object Object],[object Object],[object Object],[object Object],
                 // [object Object],[object Object],[object Object],[object Object],[object Object]
@@ -118,27 +121,21 @@ function Trailer() {
                 </div>
 
 
-                <div style={{ display: 'flex', justifyContent:'center' , height: '50vh', backgroundColor: 'green' }} >
+                <div className='picandvid'  >
                    
                     <div className='poster' >
-                        <img style={{ width: '100%', height: '50%' }} src={`https://image.tmdb.org/t/p/original/${apidata.poster_path}`} />
+                        <img style={{ width: '100%', height: '100%' }} src={`https://image.tmdb.org/t/p/original/${apidata.poster_path}`} />
                     </div>
-
-
 
                     <div className='trailervideo ' >
-                        <ReactPlayer controls     url={link} />
-                        <Button variant="contained" colour='error' onClick={nextvid} > Next </Button>
-                        <Button variant="contained" colour='error' onClick={prevvid}  > Previous </Button>
+                        <ReactPlayer controls  height='100%' width='100%'  url={link} className='trailvideo' />
+                        <Button  size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
+                        <Button className='rightbtn'   onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large'  /> </Button>
                     </div>
 
-                </div>
+                    
 
-
-                <div className='grouper' >
-                    <div className='videogrouper' ></div>
-                    <div className='photosgrouper' ></div>
-                </div>
+                </div>              
 
             </div>
 

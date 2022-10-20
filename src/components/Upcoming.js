@@ -2,6 +2,12 @@ import React, { Component } from "react";
 
 import axios from "axios";
 import Banner from "./Banner";
+import Dialog from '@mui/material/Dialog';
+import Button from '@mui/material/Button';
+import DialogActions from '@mui/material/DialogActions';
+import ReactPlayer from 'react-player'
+import { faYoutube } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export class Upcoming extends Component {
     constructor() {
@@ -9,11 +15,15 @@ export class Upcoming extends Component {
 
         this.state = {
             Hover: "",
+            open: "",
             Movies: [],
             currpage: 1,
             pagearr: [1],
             favorites: [],
             arraylength: 0,
+            link: "",
+            trailerno: 0,
+            maxtraileno: 0,
         };
     }
 
@@ -108,6 +118,60 @@ export class Upcoming extends Component {
         });
     }
 
+
+    setopen(id) {
+        // console.log(id);
+        this.setState({
+            open: id,
+            trailerno: 0,
+        });
+        console.log(this.state.open);
+        this.trailer(id);
+    }
+
+    async trailer(id) {
+        console.log("open id - " + id);
+        const trailres = await axios.get(
+            `https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`
+        );
+        let traildata = trailres.data.results;
+        if (traildata.length == 0) {
+            this.setState({
+                link: '',
+            })
+            return;
+        }
+        // console.log(traildata);
+        let trailfilt = traildata.filter((film) => {
+            return film.official != false
+        })
+
+        // this.setState({
+        //   keylist : trailfilt[0].key,
+        // })
+        // console.log(" = " + this.state.keylist);
+        let max = trailfilt.length
+        if (max == 0) {
+            this.setState({
+                link: `https://www.youtube.com/watch?v=${traildata[`${this.state.trailerno}`].key}`,
+                maxtraileno: max,
+            })
+        }
+        else {
+            this.setState({
+                link: `https://www.youtube.com/watch?v=${trailfilt[`${this.state.trailerno}`].key}`,
+                maxtraileno: max,
+            })
+        }
+        console.log("trailerno - " + this.state.trailerno);
+    }
+
+    setclose = () => {
+        this.setState({
+            open: "",
+        })
+    }
+
     async componentDidUpdate() {
         const res = await axios.get(
             `https://api.themoviedb.org/3/movie/upcoming?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US&page=${this.state.currpage} `
@@ -125,6 +189,21 @@ export class Upcoming extends Component {
         })
     }
 
+    trailerincrement() {
+        let x = this.state.trailerno;
+        let max = this.state.maxtraileno;
+        if (x < max - 1) {
+            x++;
+        }
+        else {
+            x = 0;
+        }
+        this.setState({
+            trailerno: x,
+        })
+        this.trailer(this.state.open)
+    }
+
 
     render() {
         // let data = JSON.parse(localStorage.getItem('movie-list') || '[]' )
@@ -133,74 +212,107 @@ export class Upcoming extends Component {
         return (
             <>
                 {/* <Banner> number = {this.state.Movies} </Banner> */}
-                <h2 className="trending text-center">
-                    <strong>Most Recent</strong>
-                </h2>
-                <div className="movielists">
-                    {this.state.Movies.map((n) => {
-                        return (
-                            <div
-                                className="card movie-card"
-                                onMouseEnter={() => this.setState({ hover: n.id })}
-                                onMouseLeave={() => this.setState({ hover: "" })}
-                            >
-                                <img
-                                    src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
-                                    className="card-img-top movies-img"
-                                />
-                                <h4 className="card-title text-center movies-title">
-                                    {n.original_title}
-                                </h4>
-                                <h6 className="popularity text-center">
 
-                                    popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "}
-                                    {n.vote_average}/10{" "}
-                                </h6>
-                                {this.state.hover == n.id && (
-                                    <>
-                                        <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
-                                            {this.state.favorites.includes(n.id) ? "Remove from Favorites" : 'Add to favorites'} </a>
-                                    </>
+                <div class="glitch-wrapper trending  ">
+                    <div class="glitch" data-glitch="MostRecent">  MostRecent </div>
+                </div>
+
+                <div className="maincontent" >
+
+                    <div className="movielists">
+                        {this.state.Movies.map((n) => {
+                            return (
+                                <div
+                                    className="card movie-card"
+                                    onMouseEnter={() => this.setState({ hover: n.id })}
+                                    onMouseLeave={() => this.setState({ hover: "" })}
+                                >
+                                    <img
+                                        src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
+                                        className="card-img-top movies-img"
+                                    />
+                                    <h4 className="card-title text-center movies-title">
+                                        {n.original_title}
+                                    </h4>
+                                    <h6 className="popularity text-center">
+
+                                        popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "}
+                                        {n.vote_average}/10{" "}
+                                    </h6>
+                                    {this.state.hover == n.id && (
+                                        <>
+                                            <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
+                                                {this.state.favorites.includes(n.id) ? "Remove from Favorites" : 'Add to favorites'} </a>
+                                            <FontAwesomeIcon className="btn btn-primary play " icon={faYoutube} onClick={() => this.setopen(n.id)}></FontAwesomeIcon>
+                                        </>
+                                    )}
+                                    <Dialog
+                                        open={this.state.open == n.id}
+                                        onClose={this.setclose}
+                                        aria-labelledby='alert-dialog-title'
+                                        aria-describedby='alert-dialog-description'
+                                        fullWidth={true}
+                                        maxWidth='md'>
+
+                                        <DialogActions style={{ display: 'flex', flexDirection: 'column' }} >
+
+                                            {/* let sr =  https://www.youtube.com/watch?v=&{this.state.keylist} ; */}
+
+                                            < ReactPlayer url={this.state.link} controls />
+
+                                            {/* <video src={this.state.link} controls  ></video> */}
+
+                                            <div style={{ margin: '2rem' }} >
+                                                <Button onClick={(this.setclose)} autoFocus> Close </Button>
+                                                <Button onClick={() => this.trailerincrement()} >  Next </Button>
+                                            </div>
+
+                                        </DialogActions>
+
+                                    </Dialog>
+
+
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+
+                <div className="pagechange"  >
+                    <div className="pagina">
+                        <nav aria-label="...">
+                            <ul className="pagination">
+                                <li className="page-item ">
+                                    <button
+                                        onClick={this.handelpageprevious}
+                                        className="page-link"
+                                    >
+                                        Previous
+                                    </button>
+                                </li>
+                                {this.state.pagearr.slice(this.state.arraylength, this.state.pagearr.length).map((m) =>
+                                (<li>
+                                    <button onClick={() => this.pageno(m)} className="page-link"> {m} </button>
+
+                                </li>)
                                 )}
 
-                            </div>
-                        );
-                    })}
-                    <div>
-                        <div className="pagina">
-                            <nav aria-label="...">
-                                <ul className="pagination">
-                                    <li className="page-item ">
-                                        <button
-                                            onClick={this.handelpageprevious}
-                                            className="page-link"
-                                        >
-                                            Previous
-                                        </button>
-                                    </li>
-                                    {this.state.pagearr.slice(this.state.arraylength, this.state.pagearr.length).map((m) =>
-                                    (<li>
-                                        <button onClick={() => this.pageno(m)} className="page-link"> {m} </button>
 
-                                    </li>)
-                                    )}
-
-
-                                    <li className="page-item">
-                                        <button
-                                            onClick={this.handlepagenext}
-                                            className="page-link"
-                                            href="#"
-                                        >
-                                            Next
-                                        </button>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                                <li className="page-item">
+                                    <button
+                                        onClick={this.handlepagenext}
+                                        className="page-link"
+                                        href="#"
+                                    >
+                                        Next
+                                    </button>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
-                    {/* <div className='copyright'> <h2> COPYRIGHT &#169; 2022 @Ritesh-Ray 	&#174; </h2> </div> */}
                 </div>
+                {/* <div className='copyright'> <h2> COPYRIGHT &#169; 2022 @Ritesh-Ray 	&#174; </h2> </div> */}
             </>
         );
     }
