@@ -8,7 +8,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function Trailer({detailID}) {
 
-    // const [ID, setid] = useState({detailID});
+    const [ID, setid] = useState( detailID );
     const [apidata, setapidata] = useState({});
     const [genres, setgenre] = useState({})
     const [videos, setvideos] = useState([])
@@ -17,22 +17,25 @@ function Trailer({detailID}) {
 
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/${{detailID}}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+        // setid(detailID);
+        axios.get(`https://api.themoviedb.org/3/movie/436270?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
-            // console.log(response.data)
-            console.log( "props id -  "  +  detailID)
-            setapidata(response.data)
+            console.log(  response.data)
+            console.log( "props detailid -  "  +  detailID)
+            console.log( "props id -  "  +  ID)
+    
+            setapidata(response.data);
             setgenre(response.data.genres);
         }).catch(err => {
             console.log(err);
         })
-    }, [])
+    }, [detailID])
 
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/${detailID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
-            //get videos api     
+        //get videos api     
+        axios.get(`https://api.themoviedb.org/3/movie/436270/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
-            console.log(traildata);
+            console.log(  traildata);
 
             if (traildata.length == 0) {
                 setvideos([])
@@ -71,7 +74,7 @@ function Trailer({detailID}) {
         }).catch(err => {
             console.log(err);
         })
-    }, [])
+    }, [detailID])
 
     const nextvid = () => {
         let x = vidcount;

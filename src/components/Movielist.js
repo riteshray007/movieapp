@@ -210,15 +210,10 @@ export class Movielist extends Component {
 
     return (
       <>
-        {/* <h1>{this.state.open}</h1> */}
-
         
-
           <div class="glitch-wrapper trending  ">
             <div class="glitch" data-glitch="Trending">  Trending  </div>
           </div>
-
-
 
         <div className="maincontent" >
           <div className="movielists">
@@ -229,13 +224,14 @@ export class Movielist extends Component {
                   className="card movie-card"
                   onMouseEnter={() => this.setState({ hover: n.id })}
                   onMouseLeave={() => this.setState({ hover: "" })}
-                  onClick={ ()=>{
-                    this.setState({ detailid : n.id })
-                  } }
+                  
                 >
                   <img
                     src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
                     className="card-img-top movies-img"
+                    onClick={ ()=>{
+                      this.setState({ detailid : n.id })
+                    } }
                   />
                   <h4 className="card-title text-center movies-title">
                     {n.original_title}
