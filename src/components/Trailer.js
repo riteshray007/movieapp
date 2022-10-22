@@ -6,9 +6,9 @@ import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
-function Trailer({detailID}) {
+function Trailer({ detailID }) {
 
-    const [ID, setid] = useState( detailID );
+    // const [ID, setid] = useState( detailID );
     const [apidata, setapidata] = useState({});
     const [genres, setgenre] = useState({})
     const [videos, setvideos] = useState([])
@@ -17,13 +17,13 @@ function Trailer({detailID}) {
 
 
     useEffect(() => {
-        // setid(detailID);
-        axios.get(`https://api.themoviedb.org/3/movie/436270?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+        let a = detailID;
+        axios.get(`https://api.themoviedb.org/3/movie/${a}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
-            console.log(  response.data)
-            console.log( "props detailid -  "  +  detailID)
-            console.log( "props id -  "  +  ID)
-    
+            console.log(response.data)
+            console.log("props detailid -  " + detailID)
+            // console.log( "props id -  "  +  ID)  
+
             setapidata(response.data);
             setgenre(response.data.genres);
         }).catch(err => {
@@ -33,9 +33,10 @@ function Trailer({detailID}) {
 
     useEffect(() => {
         //get videos api     
-        axios.get(`https://api.themoviedb.org/3/movie/436270/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+        let b = detailID;
+        axios.get(`https://api.themoviedb.org/3/movie/${b}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
-            console.log(  traildata);
+            console.log(traildata);
 
             if (traildata.length == 0) {
                 setvideos([])
@@ -60,16 +61,8 @@ function Trailer({detailID}) {
                 })
                 setlink(`https://www.youtube.com/watch?v=${keys[0]}`)
                 setvideos([...keys]);
-                // console.log("keys with - " + keys)
-                //result i get - 
-                // FfpBUelcFdo,6U8ikxgyn58,4dDljHr0DHw,sxp5yWfsutE,
-                // J2_BA4UKENg,yzuecv_PSHg,gLyamuqjXZ8,idc0EOmKr30,_6oXTLMS__E,ecJRvz9nk-U
-                // setvideos([...keys]);
-                //setting the videos state
-                // console.log("keys with v - " + videos)
-                //result i get - 
-                // [object Object],[object Object],[object Object],[object Object],[object Object],
-                // [object Object],[object Object],[object Object],[object Object],[object Object]
+
+
             }
         }).catch(err => {
             console.log(err);
@@ -125,20 +118,21 @@ function Trailer({detailID}) {
 
 
                 <div className='picandvid'  >
-                   
+
                     <div className='poster' >
                         <img style={{ width: '100%', height: '100%' }} src={`https://image.tmdb.org/t/p/original/${apidata.poster_path}`} />
                     </div>
 
                     <div className='trailervideo ' >
-                        <ReactPlayer controls  height='100%' width='100%'  url={link} className='trailvideo' />
-                        <Button  size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
-                        <Button className='rightbtn'   onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large'  /> </Button>
+                        <ReactPlayer controls height='100%' width='100%' url={link} className='trailvideo' />
+
+                        <Button size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
+                        <Button className='rightbtn' onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large' /> </Button>
                     </div>
 
-                    
 
-                </div>              
+
+                </div>
 
             </div>
 
