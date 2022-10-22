@@ -17,8 +17,8 @@ function Trailer({ detailID }) {
 
 
     useEffect(() => {
-        let a = detailID;
-        axios.get(`https://api.themoviedb.org/3/movie/${a}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+       
+        axios.get(`https://api.themoviedb.org/3/movie/${detailID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
             console.log(response.data)
             console.log("props detailid -  " + detailID)
@@ -33,8 +33,8 @@ function Trailer({ detailID }) {
 
     useEffect(() => {
         //get videos api     
-        let b = detailID;
-        axios.get(`https://api.themoviedb.org/3/movie/${b}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+         
+        axios.get(`https://api.themoviedb.org/3/movie/${detailID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
             console.log(traildata);
 
