@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
-import trailer from "./trailer.css";
+import "./trailer.css";
 import ReactPlayer from 'react-player';
 import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import StarIcon from '@mui/icons-material/Star';
 
-function Trailer({ detailID }) {
+
+function Trailer() {
 
     // const [ID, setid] = useState( detailID );
     const [apidata, setapidata] = useState({});
@@ -17,11 +19,13 @@ function Trailer({ detailID }) {
 
 
     useEffect(() => {
-       
-        axios.get(`https://api.themoviedb.org/3/movie/${detailID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+
+        let id = JSON.parse(localStorage.getItem('movie-Id') || '')
+        axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
             console.log(response.data)
-            console.log("props detailid -  " + detailID)
+            // let data = JSON.parse(localStorage.getItem('movie-detail') || '[]')
+            // console.log("props detailid -  " + detailID)
             // console.log( "props id -  "  +  ID)  
 
             setapidata(response.data);
@@ -29,12 +33,13 @@ function Trailer({ detailID }) {
         }).catch(err => {
             console.log(err);
         })
-    }, [detailID])
+    }, [])
 
     useEffect(() => {
         //get videos api     
-         
-        axios.get(`https://api.themoviedb.org/3/movie/${detailID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+
+        let id = JSON.parse(localStorage.getItem('movie-Id') || '')
+        axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
             console.log(traildata);
 
@@ -61,19 +66,17 @@ function Trailer({ detailID }) {
                 })
                 setlink(`https://www.youtube.com/watch?v=${keys[0]}`)
                 setvideos([...keys]);
-
-
             }
         }).catch(err => {
             console.log(err);
         })
-    }, [detailID])
+    }, [])
 
     const nextvid = () => {
         let x = vidcount;
         let max = videos.length - 1;
         x += 1;
-        console.log("max is - " + max)
+        // console.log("max is - " + max)
         setvcount(x);
         if (x >= max) {
             x = 0;
@@ -82,13 +85,13 @@ function Trailer({ detailID }) {
         else {
             setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
         }
-        console.log("x is - " + x);
+        // console.log("x is - " + x);
     }
     const prevvid = () => {
         let x = vidcount;
         let max = videos.length - 1;
         x -= 1;
-        console.log(" max is - " + max)
+        // console.log(" max is - " + max)
         if (x == -1) {
             x = max;
             setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
@@ -96,24 +99,28 @@ function Trailer({ detailID }) {
         else {
             setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
         }
-        console.log(" x is  - " + x)
+        // console.log(" x is  - " + x)
         setvcount(x);
     }
 
 
     // let name = apidata.belongs_to_collection
     return (
-        <div>
+        <div style={{marginBottom:'3vh'}} >
 
             <div className='detailmain' >
 
                 <div className='moviedetail' >
                     <div className='detail-name' >
-                        <h3>  {apidata.id} </h3>
+                        {/* <h3>  {apidata.id} </h3> */}
                         {/* <h3>  {name.name} </h3> */}
-                        <h3>  {apidata.title} </h3>
+                        <h2>  {apidata.title} </h2>
+                        {apidata.api != "" && (<h6> {apidata.tagline} </h6>)}
                     </div>
-                    <div className='detail-ratings' ></div>
+                    <div className='detail-ratings' >
+                        <StarIcon fontSize='large'  /> {apidata.vote_average}
+                        <div className='r-date' > Date - {apidata.release_date} </div>
+                    </div>
                 </div>
 
 
@@ -128,13 +135,33 @@ function Trailer({ detailID }) {
 
                         <Button size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
                         <Button className='rightbtn' onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large' /> </Button>
+
                     </div>
 
+                </div>
+                <div className='generes' >
 
-
+                    {apidata.genres?.map((n) => {
+                        return (
+                            <div className='chip' >
+                                {n.name}
+                            </div>
+                        )
+                    })}
                 </div>
 
             </div>
+            
+                <h4 style={{ marginLeft : '10%' , marginTop:'1.5vh'   }}  > Brife - </h4>
+            <div className='brife' >
+                <h6  className='brifeh6' >{apidata.overview}</h6>
+            </div>
+             
+             
+             { apidata.homepage != "" && ( <div className='homepage'  > you can also visit -    <a href={apidata.homepage} >{apidata.homepage} </a> </div>  ) }
+             
+
+
 
         </div>
     )

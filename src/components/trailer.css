@@ -1,53 +1,108 @@
-*{
+* {
     padding: 0px;
     margin: 0px;
 }
-.detailmain{
+
+.detailmain {
     background-color: rgb(56, 54, 54);
+    /* background-image: ; */
     color: white;
     border: 5px solid rgb(56, 54, 54);
+}
+
+.moviedetail {
+    display: flex;
+    justify-content: space-between;
     text-shadow: 1px 1px 2px rgb(203, 114, 114), 0 0 25px rgb(250, 250, 251), 0 0 5px rgb(92, 92, 95);
 }
 
-.picandvid{
-  display: flex;
-  justify-content: center;
-  height: 55vh;
-  /* background-color: green; */
-  margin-top: 3vh;
-  margin-bottom: 3vh;
+.detail-ratings {
+    margin-right: 1vw;
+    font-size: larger;
 }
 
-.poster{
+.detail-name {
+    margin-left: 1vw;
+}
+
+.generes {
+    display: flex;
+    height: 4vh;
+    align-items: center;
+    width: 50vw;
+    /* border: 3px solid white; */
+    margin-left: 13.5vw;
+    margin-bottom: 1vw;
+}
+
+.chip {
     height: 100%;
-    width: 20%;  
+    width: 10%;
+    margin-right: 3px;
+    font-size: 13.5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid white;
+    border-radius: 20px;
+    overflow: hidden;
+    text-shadow: 0 0 25px rgb(250, 250, 251), 0 0 5px rgb(92, 92, 95);
+    /* text-decoration-color: beige; */
+}
+
+.picandvid {
+    display: flex;
+    justify-content: center;
+    height: 55vh;
+    /* background-color: green; */
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
+.poster {
+    height: 100%;
+    width: 20%;
     margin-right: 2vw;
 }
 
-.rightbtn{
+.rightbtn {
     position: absolute;
     bottom: 50%;
     left: 83.2%;
     margin: 0rem;
     padding: 0rem;
-    
+
 }
 
-.leftbtn{
+.leftbtn {
     position: absolute;
-    bottom: 50% ;
+    bottom: 50%;
     left: 0%;
     margin: 0rem;
     padding: 0rem;
 }
 
-.trailvideo{
+.trailvideo {
     position: relative;
     /* margin-left: 2vw ; */
 }
 
-.trailervideo{
-    height : 100%;
+.trailervideo {
+    height: 100%;
     width: 50%;
     /* overflow:-moz-hidden-unscrollable ; */
+}
+
+.brife{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.brifeh6{
+    width: 80%;
+}
+.homepage{
+    margin-left: 10vw;
+    margin-bottom: 1vh;
 }

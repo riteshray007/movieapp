@@ -200,6 +200,14 @@ export class Movielist extends Component {
     this.trailer(this.state.open)
   }
   
+  navigater (id) {
+
+    let data = localStorage.setItem("movie-Id" , id );
+    this.setState({
+      detailid:id,
+    })
+
+  }
   
 
   
@@ -229,9 +237,7 @@ export class Movielist extends Component {
                   <img
                     src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
                     className="card-img-top movies-img"
-                    onClick={ ()=>{
-                      this.setState({ detailid : n.id })
-                    } }
+                    onClick={ ()=> this.navigater(n.id)  }
                   />
                   <h4 className="card-title text-center movies-title">
                     {n.original_title}
@@ -241,7 +247,7 @@ export class Movielist extends Component {
                   </h6>
                   {this.state.detailid == n.id && (
                     <div>
-                      <Trailer  detailID={n.id}  />
+                      {/* <Trailer   /> */}
                     <Navigate to="/detail" replace={true} /> 
                     </div>
                   )}
