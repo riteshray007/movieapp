@@ -106,7 +106,7 @@ function Trailer() {
 
     // let name = apidata.belongs_to_collection
     return (
-        <div style={{marginBottom:'3vh'}} >
+        <div style={{ marginBottom: '3vh' }} >
 
             <div className='detailmain' >
 
@@ -117,9 +117,14 @@ function Trailer() {
                         <h2>  {apidata.title} </h2>
                         {apidata.api != "" && (<h6> {apidata.tagline} </h6>)}
                     </div>
-                    <div className='detail-ratings' >
-                        <StarIcon fontSize='large'  /> {apidata.vote_average}
-                        <div className='r-date' > Date - {apidata.release_date} </div>
+                    <div style={{display:'flex'}} >
+                        <div className='runtime '>
+                            <h6  > {apidata.runtime}Min </h6>
+                        </div>
+                        <div className='detail-ratings' >
+                            <StarIcon fontSize='large' /> {apidata.vote_average}
+                            <div className='r-date' > Date - {apidata.release_date} </div>
+                        </div>
                     </div>
                 </div>
 
@@ -151,15 +156,31 @@ function Trailer() {
                 </div>
 
             </div>
-            
-                <h4 style={{ marginLeft : '10%' , marginTop:'1.5vh'   }}  > Brife - </h4>
+
+            <h4 style={{ marginLeft: '10%', marginTop: '1.5vh' }}  > Brief - </h4>
             <div className='brife' >
-                <h6  className='brifeh6' >{apidata.overview}</h6>
+                <h6 className='brifeh6' >{apidata.overview}</h6>
             </div>
-             
-             
-             { apidata.homepage != "" && ( <div className='homepage'  > you can also visit -    <a href={apidata.homepage} >{apidata.homepage} </a> </div>  ) }
-             
+            {apidata.homepage != "" && (<div className='homepage'  > you can also visit -    <a href={apidata.homepage} >{apidata.homepage} </a> </div>)}
+            
+            <h4 style={{ marginLeft: '10%', marginTop: '1.5vh' }}  > Production Companies - </h4>            
+            <div className='companies' > 
+            {
+                (apidata.production_companies?.map((n) =>{
+                    return( 
+                        <div className='company'>
+                            { n.logo_path != null &&  <div>
+                                <img className='c-img' src={`https://image.tmdb.org/t/p/w500/${n.logo_path}`}  />
+                            </div> }                            
+                            {n.name}
+                        </div>
+                    )
+                } ))
+
+            }
+            </div>
+
+
 
 
 
