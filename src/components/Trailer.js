@@ -10,9 +10,9 @@ import StarIcon from '@mui/icons-material/Star';
 
 function Trailer() {
 
-    // const [ID, setid] = useState( detailID );
+    const [ID, setid] = useState(localStorage.getItem('movie-Id'));
     const [apidata, setapidata] = useState({});
-    const [genres, setgenre] = useState({})
+    const [credit, setcredit] = useState([])
     const [videos, setvideos] = useState([])
     const [link, setlink] = useState('')
     const [vidcount, setvcount] = useState(0)
@@ -20,8 +20,8 @@ function Trailer() {
 
     useEffect(() => {
 
-        let id = JSON.parse(localStorage.getItem('movie-Id') || '')
-        axios.get(`https://api.themoviedb.org/3/movie/${id}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
+        // let id = JSON.parse(localStorage.getItem('movie-Id') || '')
+        axios.get(`https://api.themoviedb.org/3/movie/${ID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
             console.log(response.data)
             // let data = JSON.parse(localStorage.getItem('movie-detail') || '[]')
@@ -29,17 +29,16 @@ function Trailer() {
             // console.log( "props id -  "  +  ID)  
 
             setapidata(response.data);
-            setgenre(response.data.genres);
         }).catch(err => {
             console.log(err);
         })
-    }, [])
+    }, [ID])
 
     useEffect(() => {
         //get videos api     
 
-        let id = JSON.parse(localStorage.getItem('movie-Id') || '')
-        axios.get(`https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+        // let id = JSON.parse(localStorage.getItem('movie-Id') || '')
+        axios.get(`https://api.themoviedb.org/3/movie/${ID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
             console.log(traildata);
 
@@ -70,7 +69,30 @@ function Trailer() {
         }).catch(err => {
             console.log(err);
         })
-    }, [])
+    }, [ID])
+
+    useEffect(() => {
+
+        axios.get(`https://api.themoviedb.org/3/movie/${ID}/credits?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
+            let data = res.data
+
+            let cl = data.cast.length;
+            if (cl > 12) {
+                data.cast = data.cast.slice(0, 10);
+            }
+            // console.log(data.cast);
+
+
+
+            setcredit(data);
+            // console.log(credit);
+            // console.log(data)
+        }).catch(err => {
+            console.log(err);
+        })
+
+
+    }, [ID])
 
     const nextvid = () => {
         let x = vidcount;
@@ -117,7 +139,7 @@ function Trailer() {
                         <h2>  {apidata.title} </h2>
                         {apidata.api != "" && (<h6> {apidata.tagline} </h6>)}
                     </div>
-                    <div style={{display:'flex'}} >
+                    <div style={{ display: 'flex' }} >
                         <div className='runtime '>
                             <h6  > {apidata.runtime}Min </h6>
                         </div>
@@ -161,25 +183,42 @@ function Trailer() {
             <div className='brife' >
                 <h6 className='brifeh6' >{apidata.overview}</h6>
             </div>
-            {apidata.homepage != "" && (<div className='homepage'  > you can also visit -    <a href={apidata.homepage} >{apidata.homepage} </a> </div>)}
-            
-            <h4 style={{ marginLeft: '10%', marginTop: '1.5vh' }}  > Production Companies - </h4>            
-            <div className='companies' > 
-            {
-                (apidata.production_companies?.map((n) =>{
-                    return( 
-                        <div className='company'>
-                            { n.logo_path != null &&  <div>
-                                <img className='c-img' src={`https://image.tmdb.org/t/p/w500/${n.logo_path}`}  />
-                            </div> }                            
-                            {n.name}
-                        </div>
-                    )
-                } ))
+            {apidata.homepage != "" && (<div className='homepage'> you can also visit -    <a href={apidata.homepage} >{apidata.homepage} </a> </div>)}
 
-            }
+            <h4 style={{ marginLeft: '10%', marginTop: '1.5vh' }}  > Production Companies - </h4>
+            <div className='companies' >
+                {
+                    (apidata.production_companies?.map((n) => {
+                        return (
+                            <div className='company'>
+                                {n.logo_path != null && <div>
+                                    <img className='c-img' src={`https://image.tmdb.org/t/p/w500/${n.logo_path}`} />
+                                </div>}
+                                {n.name}
+                            </div>
+                        )
+                    }))
+
+                }
             </div>
 
+            <h4 style={{ marginLeft: '10%', marginTop: '2vh' }}  > Top Casts :- </h4>
+            <div className='creditdiv' >
+                {
+                    (credit.cast?.map((nn) => {
+                        return (
+                            <div className='cast' >
+                                <img className='castimg' src={`https://image.tmdb.org/t/p/w300/${nn.profile_path}`} />
+                                <div >
+                                <h5> {nn.original_name} </h5>
+                                <h6> {nn.character} </h6>
+                                </div>
+                            </div>
+                        )
+                    }))
+                }
+
+            </div>
 
 
 
