@@ -8,6 +8,7 @@ export class Banner extends Component {
   render() {
     // let movie = this.props.movies[1]
     let moviedata = movies.results[Math.floor(Math.random()*10)]
+    let link = `https://image.tmdb.org/t/p/original${moviedata.backdrop_path}`
     // console.log(moviedata)
     return (
       <>
@@ -18,14 +19,17 @@ export class Banner extends Component {
             height : "60vh",
             margin: "0.1vw",
             borderColor: "white",
+            backgroundImage: `url(${link})`,
+            // backgroundAttachment:'fixed',
+            backgroundSize:'cover',
           }}
         >
-          <img
+          {/* <img
             src={`https://image.tmdb.org/t/p/original${moviedata.backdrop_path}`}
             className="card-img-top banner-img  "
             alt="..."
             style={{ borderRadius: "1vw" }}
-          />
+          /> */}
           <h5 className="card-title title">  {moviedata.original_title} </h5>
           <p className="card-text subtitle">
            {moviedata.overview}

@@ -21,14 +21,9 @@
     background: linear-gradient(121deg, #9fe7ca 0%, #c5cdc1 70%);
 }
 
-.card-img-top banner-img {
+/* .card-img-top banner-img {
     height: 100%;
-}
-
-.banner-img {
-    width: 100%;
-    height: 100%;
-}
+} */
 
 .title {
     position: absolute;
@@ -93,7 +88,7 @@
     word-spacing: 2px;
     font-size: 1.5vw;
     color: #acbfc2;
-    
+
 }
 
 .movies-img {
@@ -412,44 +407,91 @@
 
 
 .search {
-  width: 100%;  
-  height: 50%;
-  display: flex;
-  background-color: #00B4CC;
-  border-radius: 5px 5px 5px 5px;
+    width: 100%;
+    height: 50%;
+    display: flex;
+    background-color: #00B4CC;
+    border-radius: 5px 5px 5px 5px;
+    position: relative;
 }
 
 .searchTerm {
-  width: 92%;
-  height: 100%;
-  border: 3px solid #00B4CC;
-  border-right: none;
-  padding: 3.2px;
-  border-radius: 5px 0 0 5px;
-  outline: none;
-  color: #9DBFAF;
+    width: 92%;
+    height: 100%;
+    border: 3px solid #00B4CC;
+    border-right: none;
+    padding: 3.2px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
 }
 
-.searchTerm:focus{
-  color: #00B4CC;
+
+.searchTerm:focus {
+    color: #00B4CC;
 }
 
 .searchButton {
-  width: 8%;
-  height: 100%;
-  border: 1px solid #00B4CC;
-  background: #00B4CC;
-  text-align: center;
-  color: #fff;
-  border-radius: 0 5px 5px 0;
-  cursor: pointer;
-  font-size: 20px;
+    width: 8%;
+    height: 100%;
+    border: 1px solid #00B4CC;
+    background: #00B4CC;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
 }
 
 /*Resize the wrap to see the search bar change!*/
-.wrap{
-  width: 100%; 
-  height: 50%;
-  /* transform: translate(-50%, -50%); */
+.wrap {
+    width: 100%;
+    height: 50%;
+    /* transform: translate(-50%, -50%); */
+}
+
+.results {
+    position: absolute;
+    width: 50vw;
+    /* height: ; */
+    z-index: 1;
+    overflow: scroll;
+    min-height: 10vh;
+    max-height: 64vh;
+    /* border: 1px solid red; */
+    margin-top: 0.2rem;
+    /* top:2vw; */
+    /* bottom: 2vw; */
+    /* left: 2vw; */
+    right: 2rem;
+}
+
+.resultindi {
+    display: flex;
+    width: 100%;
+    height: 30vh;
+    background: #636363;
+    background: -webkit-linear-gradient(0deg, #636363 0%, #474247 100%);
+    background: linear-gradient(0deg, #636363 0%, #474247 100%);
+}
+
+.searchimg {
+    width: 50%;
+    height: 100%;
+}
+
+.resultdetail{
+    margin-left: 2vw;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    color: white;
+    text-shadow: 0 0 25px rgb(250, 250, 251), 0 0 5px rgb(92, 92, 95);
+}
+
+.noresultimg{
+    width: 100%;
+    height:20vw;
 }
 

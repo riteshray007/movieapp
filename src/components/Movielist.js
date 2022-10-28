@@ -9,7 +9,7 @@ import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import ReactPlayer from 'react-player'
 import { Navigate } from "react-router-dom";
-import Trailer from "./Trailer";
+
 
 
 export class Movielist extends Component {
@@ -247,7 +247,6 @@ export class Movielist extends Component {
                   </h6>
                   {this.state.detailid == n.id && (
                     <div>
-                      {/* <Trailer   /> */}
                     <Navigate to="/detail" replace={true} /> 
                     </div>
                   )}

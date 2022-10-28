@@ -8,6 +8,7 @@ import DialogActions from '@mui/material/DialogActions';
 import ReactPlayer from 'react-player'
 import { faYoutube } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Navigate } from "react-router-dom";
 
 export class Upcoming extends Component {
     constructor() {
@@ -24,6 +25,7 @@ export class Upcoming extends Component {
             link: "",
             trailerno: 0,
             maxtraileno: 0,
+            detailid: '',
         };
     }
 
@@ -204,6 +206,15 @@ export class Upcoming extends Component {
         this.trailer(this.state.open)
     }
 
+    navigater(id) {
+
+        let data = localStorage.setItem("movie-Id", id);
+        this.setState({
+            detailid: id,
+        })
+
+    }
+
 
     render() {
         // let data = JSON.parse(localStorage.getItem('movie-list') || '[]' )
@@ -230,6 +241,7 @@ export class Upcoming extends Component {
                                     <img
                                         src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
                                         className="card-img-top movies-img"
+                                        onClick={() => this.navigater(n.id)}
                                     />
                                     <h4 className="card-title text-center movies-title">
                                         {n.original_title}
@@ -239,6 +251,11 @@ export class Upcoming extends Component {
                                         popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "}
                                         {n.vote_average}/10{" "}
                                     </h6>
+                                    {this.state.detailid == n.id && (
+                                        <div>
+                                            <Navigate to="/detail" replace={true} />
+                                        </div>
+                                    )}
                                     {this.state.hover == n.id && (
                                         <>
                                             <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >

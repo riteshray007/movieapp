@@ -6,9 +6,10 @@ import { Button } from '@mui/material';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import StarIcon from '@mui/icons-material/Star';
+import nocast from './nocast.jpg';
 
 
-function Trailer() {
+function Trailer({}) {
 
     const [ID, setid] = useState(localStorage.getItem('movie-Id'));
     const [apidata, setapidata] = useState({});
@@ -16,28 +17,25 @@ function Trailer() {
     const [videos, setvideos] = useState([])
     const [link, setlink] = useState('')
     const [vidcount, setvcount] = useState(0)
+    const [allcast, setcast] = useState(false)
 
 
     useEffect(() => {
 
-        // let id = JSON.parse(localStorage.getItem('movie-Id') || '')
         axios.get(`https://api.themoviedb.org/3/movie/${ID}?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(response => {
             //details api 
             console.log(response.data)
             // let data = JSON.parse(localStorage.getItem('movie-detail') || '[]')
-            // console.log("props detailid -  " + detailID)
-            // console.log( "props id -  "  +  ID)  
 
             setapidata(response.data);
         }).catch(err => {
             console.log(err);
         })
-    }, [ID])
+    },[])
 
     useEffect(() => {
         //get videos api     
 
-        // let id = JSON.parse(localStorage.getItem('movie-Id') || '')
         axios.get(`https://api.themoviedb.org/3/movie/${ID}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let traildata = res.data.results
             console.log(traildata);
@@ -51,7 +49,7 @@ function Trailer() {
                 return vid.official != false
             })
 
-            if (filtdata.length < 3) {
+            if (filtdata.length < 5) {
                 let keys = traildata.map((v) => {
                     return v.key
                 })
@@ -69,30 +67,31 @@ function Trailer() {
         }).catch(err => {
             console.log(err);
         })
-    }, [ID])
+    },[])
 
     useEffect(() => {
-
+        //get cast details api from Id of the movie.
         axios.get(`https://api.themoviedb.org/3/movie/${ID}/credits?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`).then(res => {
             let data = res.data
 
-            let cl = data.cast.length;
-            if (cl > 12) {
-                data.cast = data.cast.slice(0, 10);
+            // let cl = data.cast.length;
+            
+            if (allcast == false) {
+                data.cast = data.cast.slice(0, 6);
             }
-            // console.log(data.cast);
-
-
-
             setcredit(data);
+
+
+
+
             // console.log(credit);
-            // console.log(data)
+            console.log(data)
         }).catch(err => {
             console.log(err);
         })
 
 
-    }, [ID])
+    }, [allcast])
 
     const nextvid = () => {
         let x = vidcount;
@@ -123,6 +122,16 @@ function Trailer() {
         }
         // console.log(" x is  - " + x)
         setvcount(x);
+    }
+
+    const handleallcasts = () => {
+        if (allcast === false) {
+
+            setcast(true);
+        }
+        else {
+            setcast(false);
+        }
     }
 
 
@@ -157,13 +166,14 @@ function Trailer() {
                         <img style={{ width: '100%', height: '100%' }} src={`https://image.tmdb.org/t/p/original/${apidata.poster_path}`} />
                     </div>
 
-                    <div className='trailervideo ' >
-                        <ReactPlayer controls height='100%' width='100%' url={link} className='trailvideo' />
+                    {videos.length != 0 &&
+                        <div className='trailervideo ' >
+                            <ReactPlayer controls height='100%' width='100%' url={link} className='trailvideo' />
 
-                        <Button size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
-                        <Button className='rightbtn' onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large' /> </Button>
+                            <Button size="small" className='leftbtn' onClick={nextvid} > <ArrowBackIosIcon fontSize='large' /> </Button>
+                            <Button className='rightbtn' onClick={prevvid}  > <ArrowForwardIosIcon fontSize='large' /> </Button>
 
-                    </div>
+                        </div>}
 
                 </div>
                 <div className='generes' >
@@ -177,7 +187,29 @@ function Trailer() {
                     })}
                 </div>
 
+            <div className='statusdiv' >
+                    <div className='status'>
+                        <h5> Status  </h5>
+                        <h5> {apidata.status} </h5>
+                    </div>
+
+                    <div className='status' >
+                        <h5> Original Language </h5>
+                        <h5> {apidata.original_language} </h5>
+                    </div>
+                    <div className='status' >
+                        <h5> Budget </h5>
+                        { apidata.budget!=0 && <h5> ${apidata.budget} </h5>}
+                    </div>
+                    <div className='status' >
+                        <h5> Revenue </h5>
+                        { apidata.revenue!=0 && <h5> ${apidata.revenue} </h5>}
+                    </div>
             </div>
+            </div>
+
+            
+
 
             <h4 style={{ marginLeft: '10%', marginTop: '1.5vh' }}  > Brief - </h4>
             <div className='brife' >
@@ -203,26 +235,36 @@ function Trailer() {
             </div>
 
             <h4 style={{ marginLeft: '10%', marginTop: '2vh' }}  > Top Casts :- </h4>
-            <div className='creditdiv' >
-                {
-                    (credit.cast?.map((nn) => {
-                        return (
-                            <div className='cast' >
-                                <img className='castimg' src={`https://image.tmdb.org/t/p/w300/${nn.profile_path}`} />
-                                <div >
-                                <h5> {nn.original_name} </h5>
-                                <h6> {nn.character} </h6>
+            {credit.cast?.length != 0 ?
+
+                <div className='creditdiv' >
+                    {
+                        (credit.cast?.map((nn) => {
+                            return (
+                                <div className='cast' >
+                                    {nn.profile_path != null &&
+                                        <img className='castimg' src={`https://image.tmdb.org/t/p/w300/${nn.profile_path}`} />
+                                    }
+                                    <div >
+                                        <h5> {nn.original_name} </h5>
+                                        <h6> {nn.character} </h6>
+                                    </div>
                                 </div>
-                            </div>
-                        )
-                    }))
-                }
+                            )
+                        }))
+                    }
 
-            </div>
+                    <div onClick={handleallcasts} className="bn40div">
+                        <a class="bn40"> {allcast === false ? "See More" : "See Less"}  </a>
+                    </div>
 
+                </div>
+                 : 
+                 <div className='creditdiv  ' >
 
-
-
+                     <img className="nocastimg" src={nocast} /> 
+                 </div>
+             } 
         </div>
     )
 }
