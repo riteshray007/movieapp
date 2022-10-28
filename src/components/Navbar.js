@@ -6,25 +6,16 @@ import StarIcon from '@mui/icons-material/Star';
 import { useNavigate } from "react-router-dom";
 import noresult from './noresults.jpg';
 import Trailer from "./Trailer";
+import MovieID from "./Trailer";
 
 function Navbar() {
 
   const [content, setcontent] = useState('');
   const [open, setOpen] = useState(false);
   const [result, setresult] = useState([])
-  // const [id , setid] = useState(localStorage.getItem('movie-Id'))
 
-
-  //  const handlecontent = (value) =>{
-  //       setcontent(value);
-  //  }
 
   const navigate = useNavigate();
-
-
-  // useEffect(()=>{
-  //       navigate('/detail')
-  // }, [id])
 
   const handleContent = async () => {
 
@@ -50,9 +41,10 @@ function Navbar() {
   const navigatedetail = (id) => {
 
     // setid(id);
-    <Trailer iD={id} />
+    // <MovieID ID={id} />
     localStorage.setItem('movie-Id', id)
-    navigate('/detail')
+    setOpen(false);
+    // navigate('/detail')
   }
 
   return (
@@ -90,16 +82,19 @@ function Navbar() {
             </div>
             {open && (
               <div className="results" >
-                {result.length != 0 ? <>
+                {result.length != 0 ? 
+                <>
                   {result?.map((n) =>
-                    <div className="resultindi" onClick={() => navigatedetail(n.id)} >
-                      <img className="serchimg" src={`https://image.tmdb.org/t/p/w500${n.poster_path}`} />
-                      <div className="resultdetail"   >
-                        <h5>{n.original_title}</h5>
-                        <h5>{n.release_date}</h5>
-                        <h5> <StarIcon /> {n.vote_average} </h5>
+                    <Link to='/detail' >
+                      <div className="resultindi" onClick={() => navigatedetail(n.id)} >
+                        <img className="serchimg" src={`https://image.tmdb.org/t/p/w500${n.poster_path}`} />
+                        <div className="resultdetail"   >
+                          <h5>{n.original_title}</h5>
+                          <h5>{n.release_date}</h5>
+                          <h5> <StarIcon /> {n.vote_average} </h5>
+                        </div>
                       </div>
-                    </div>
+                    </Link>
                   )}
                 </>
                   : <img className="noresultimg" src={noresult} />}

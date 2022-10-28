@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import DialogActions from '@mui/material/DialogActions';
 import ReactPlayer from 'react-player'
 import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 
@@ -27,7 +28,7 @@ export class Movielist extends Component {
       link: "",
       trailerno: 0,
       maxtraileno: 0,
-      detailid : '',
+      detailid: '',
     };
   }
 
@@ -129,7 +130,7 @@ export class Movielist extends Component {
   }
 
   async trailer(id) {
-    console.log("open id - " + id );
+    console.log("open id - " + id);
     const trailres = await axios.get(
       `https://api.themoviedb.org/3/movie/${id}/videos?api_key=588cdf9715348dda0561ce854dcbc4ac&language=en-US`
     );
@@ -199,18 +200,18 @@ export class Movielist extends Component {
     })
     this.trailer(this.state.open)
   }
-  
-  navigater (id) {
 
-    let data = localStorage.setItem("movie-Id" , id );
-    this.setState({
-      detailid:id,
-    })
+  navigater(id) {
+
+    let data = localStorage.setItem("movie-Id", id);
+    // this.setState({
+    //   detailid:id,
+    // })
 
   }
-  
 
-  
+
+
 
 
   render() {
@@ -218,10 +219,10 @@ export class Movielist extends Component {
 
     return (
       <>
-        
-          <div class="glitch-wrapper trending  ">
-            <div class="glitch" data-glitch="Trending">  Trending  </div>
-          </div>
+
+        <div class="glitch-wrapper trending  ">
+          <div class="glitch" data-glitch="Trending">  Trending  </div>
+        </div>
 
         <div className="maincontent" >
           <div className="movielists">
@@ -232,24 +233,22 @@ export class Movielist extends Component {
                   className="card movie-card"
                   onMouseEnter={() => this.setState({ hover: n.id })}
                   onMouseLeave={() => this.setState({ hover: "" })}
-                  
+
                 >
-                  <img
-                    src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
-                    className="card-img-top movies-img"
-                    onClick={ ()=> this.navigater(n.id)  }
-                  />
+                  <Link to='/detail' >
+                    <img
+                      src={`https://image.tmdb.org/t/p/original${n.poster_path}`}
+                      className="card-img-top movies-img"
+                      onClick={ ()=> this.navigater(n.id)  }
+                    />
+                  </Link>
                   <h4 className="card-title text-center movies-title">
                     {n.original_title}
                   </h4>
                   <h6 className="popularity text-center">
                     popularity - {n.popularity} &nbsp;&nbsp;&nbsp; Votes-{" "} {n.vote_average}/10 {" "}
                   </h6>
-                  {this.state.detailid == n.id && (
-                    <div>
-                    <Navigate to="/detail" replace={true} /> 
-                    </div>
-                  )}
+          
                   {this.state.hover == n.id && (
                     <>
                       <a className="btn btn-primary favorite " onClick={() => this.handlefavorites(n)} >
@@ -257,7 +256,7 @@ export class Movielist extends Component {
                       <FontAwesomeIcon className="btn btn-primary play " icon={faYoutube} onClick={() => this.setopen(n.id)}></FontAwesomeIcon>
                     </>
                   )}
-                 
+
                   <Dialog
                     open={this.state.open == n.id}
                     onClose={this.setclose}
@@ -332,7 +331,7 @@ export class Movielist extends Component {
 // export function Trailer(props) {
 //   // const navigate = useNavigate();
 //   return ( <Movielist navigate={navigate}></Movielist>   )
-  
+
 // }
 
 export default Movielist;

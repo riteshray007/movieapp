@@ -8,8 +8,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import StarIcon from '@mui/icons-material/Star';
 import nocast from './nocast.jpg';
 
-
-function Trailer({}) {
+function Trailer() {
 
     const [ID, setid] = useState(localStorage.getItem('movie-Id'));
     const [apidata, setapidata] = useState({});
@@ -53,7 +52,7 @@ function Trailer({}) {
                 let keys = traildata.map((v) => {
                     return v.key
                 })
-                setlink(`https://www.youtube.com/watch?v=${keys[0]}`)
+                setlink(`http://www.youtube.com/watch?v=${keys[0]}`)
                 setvideos([...keys]);
                 console.log(" keys without - " + keys)
             }
@@ -61,7 +60,7 @@ function Trailer({}) {
                 let keys = filtdata.map((v) => {
                     return v.key
                 })
-                setlink(`https://www.youtube.com/watch?v=${keys[0]}`)
+                setlink(`http://www.youtube.com/watch?v=${keys[0]}`)
                 setvideos([...keys]);
             }
         }).catch(err => {
@@ -101,10 +100,10 @@ function Trailer({}) {
         setvcount(x);
         if (x >= max) {
             x = 0;
-            setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
+            setlink(`http://www.youtube.com/watch?v=${videos[x]}`)
         }
         else {
-            setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
+            setlink(`http://www.youtube.com/watch?v=${videos[x]}`)
         }
         // console.log("x is - " + x);
     }
@@ -115,10 +114,10 @@ function Trailer({}) {
         // console.log(" max is - " + max)
         if (x == -1) {
             x = max;
-            setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
+            setlink(`http://www.youtube.com/watch?v=${videos[x]}`)
         }
         else {
-            setlink(`https://www.youtube.com/watch?v=${videos[x]}`)
+            setlink(`http://www.youtube.com/watch?v=${videos[x]}`)
         }
         // console.log(" x is  - " + x)
         setvcount(x);
@@ -269,4 +268,4 @@ function Trailer({}) {
     )
 }
 
-export default Trailer
+export default  Trailer  ;

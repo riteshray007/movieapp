@@ -466,6 +466,10 @@
     right: 2rem;
 }
 
+.results::-webkit-scrollbar {
+    display: none;
+  }
+
 .resultindi {
     display: flex;
     width: 100%;
